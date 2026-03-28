@@ -1,10 +1,10 @@
 {
-  "projectId": "my-project-23418-promptwar",
-  "appId": "1:823324320290:web:be29465bda9442a85f207b",
-  "apiKey": "AIzaSyCTUh4ibCQvQ-D7LhiwE2Tq2Xnd7QZn1UA",
-  "authDomain": "my-project-23418-promptwar.firebaseapp.com",
-  "firestoreDatabaseId": "ai-studio-a8ad65be-d1b8-406d-96fb-f2fe83b2bf7c",
-  "storageBucket": "my-project-23418-promptwar.firebasestorage.app",
-  "messagingSenderId": "823324320290",
+  "projectId": "promptwars-67be9",
+  "appId": "1:243212082329:web:c3e793d512a01e9d696c08",
+  "apiKey": "AIzaSyBdfpJoeYngZM0hCeBOfWrtqbY7uukGwaw",
+  "authDomain": "promptwars-67be9.firebaseapp.com",
+  "firestoreDatabaseId": "(default)",
+  "storageBucket": "promptwars-67be9.firebasestorage.app",
+  "messagingSenderId": "243212082329",
   "measurementId": ""
 }

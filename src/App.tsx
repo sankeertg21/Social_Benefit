@@ -18,6 +18,16 @@ const SEVERITY_MAP: Record<string, string> = {
   Unknown: "low",
 };
 
+// Sub-components for better memoization and readability
+const TriageStep = React.memo(({ step, index }: { step: string; index: number }) => (
+  <div className="step-card" role="listitem">
+    <div className="step-number" aria-label={`Step ${index + 1}`}>{index + 1}</div>
+    <div className="step-content">
+      <div className="step-action">{step}</div>
+    </div>
+  </div>
+));
+
 function SeverityAlert({ result }: { result: TriageResponse }) {
   const cls = SEVERITY_MAP[result.severityLevel] ?? "low";
   const alertText = (result.urgencyAlert || `${result.severityLevel} severity — ${result.category}`)
@@ -53,12 +63,7 @@ function ActionSteps({ steps }: { steps: string[] }) {
       <div className="section-label">What to do — in order</div>
       <div className="steps-list" role="list">
         {steps.map((step, i) => (
-          <div key={i} className="step-card" role="listitem">
-            <div className="step-number" aria-label={`Step ${i + 1}`}>{i + 1}</div>
-            <div className="step-content">
-              <div className="step-action">{step}</div>
-            </div>
-          </div>
+          <TriageStep key={i} step={step} index={i} />
         ))}
       </div>
     </div>
@@ -86,11 +91,13 @@ export default function App() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult] = useState<TriageResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
+  
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const resultsRef = useRef<HTMLElement>(null);
 
-  const handleCategoryClick = (id: string) => {
+  const handleCategoryClick = useCallback((id: string) => {
     setActiveCategory(prev => prev === id ? null : id);
-  };
+  }, []);
 
   const handleImageUpload = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
@@ -116,14 +123,14 @@ export default function App() {
     if (fileInputRef.current) fileInputRef.current.value = "";
   }, []);
 
-  const removeImage = (idx: number) => {
+  const removeImage = useCallback((idx: number) => {
     setImages(prev => {
       URL.revokeObjectURL(prev[idx].url);
       return prev.filter((_, i) => i !== idx);
     });
-  };
+  }, []);
 
-  const handleAnalyze = async () => {
+  const handleAnalyze = useCallback(async () => {
     const combined = [
       activeCategory ? `[Category: ${CATEGORIES.find(c => c.id === activeCategory)?.label}]` : "",
       textInput.trim(),
@@ -148,12 +155,14 @@ export default function App() {
     try {
       const res = await processUnstructuredInput(combined, images, location);
       setResult(res);
+      // Accessibility: Move focus to the results section once it loads
+      setTimeout(() => resultsRef.current?.focus(), 100);
     } catch (err: any) {
       setError(err.message || "An unexpected error occurred. Please try again.");
     } finally {
       setIsProcessing(false);
     }
-  };
+  }, [activeCategory, textInput, images]);
 
   const canAnalyze = (textInput.trim().length > 0 || images.length > 0) && !isProcessing;
 
@@ -270,7 +279,7 @@ export default function App() {
         </section>
 
         {/* ── RIGHT PANE ── */}
-        <section className="right-pane" aria-label="Analysis results" aria-live="polite">
+        <section className="right-pane" aria-label="Analysis results" aria-live="polite" ref={resultsRef} tabIndex={-1}>
           <div className="right-pane-header">
             <h2>Action plan</h2>
             {result && !isProcessing && (
