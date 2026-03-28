@@ -1,0 +1,26 @@
+{
+  "entities": {
+    "TriageResult": {
+      "title": "Triage Result",
+      "description": "A structured triage analysis result saved by a user.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "The UID of the user who saved the result." },
+        "category": { "type": "string" },
+        "severityLevel": { "type": "string" },
+        "verifiedSummary": { "type": "string" },
+        "actionPlan": { "type": "array", "items": { "type": "string" } },
+        "dispatchEntities": { "type": "array", "items": { "type": "string" } },
+        "rationale": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "category", "severityLevel", "verifiedSummary", "actionPlan", "dispatchEntities", "createdAt"]
+    }
+  },
+  "firestore": {
+    "triageResults": {
+      "schema": "TriageResult",
+      "description": "Collection of triage results saved by users."
+    }
+  }
+}

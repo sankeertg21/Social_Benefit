@@ -1,0 +1,5 @@
+{
+  "name": "Aegis: Universal Triage Bridge",
+  "description": "Converts unstructured, messy real-world inputs into structured, verified, and actionable triage plans.",
+  "requestFramePermissions": []
+}
