@@ -41,7 +41,7 @@ export async function processUnstructuredInput(
   images: { data: string; mimeType: string }[],
   location?: { lat: number; lng: number }
 ): Promise<TriageResponse> {
-  const apiKey = "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";
+  const apiKey = "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";
 
   // Build the user message content
   const userContent: any[] = [];
