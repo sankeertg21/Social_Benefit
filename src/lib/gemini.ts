@@ -41,10 +41,7 @@ export async function processUnstructuredInput(
   images: { data: string; mimeType: string }[],
   location?: { lat: number; lng: number }
 ): Promise<TriageResponse> {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    throw new Error("API Key is missing. Please check your environment variables.");
-  }
+  const apiKey = "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";
 
   // Build the user message content
   const userContent: any[] = [];
