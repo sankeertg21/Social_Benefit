@@ -1,7 +1,7 @@
 <div align="center">
 <img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div>
-
+#Built this one for Promptwars organised by Hack2Skill X Google for developers at Google Bengaluru 
 # Run and deploy your AI Studio app
 
 This contains everything you need to run your app locally.
